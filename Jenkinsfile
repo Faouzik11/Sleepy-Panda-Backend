@@ -1,13 +1,29 @@
 pipeline {
+
     agent any
 
     stages {
 
-        stage('Test') {
+        stage('Install Dependencies') {
+
             steps {
-                echo 'Sleepy Panda Pipeline Running'
+
+                sh 'pip3 install -r requirements-ci.txt'
+
             }
+
+        }
+
+        stage('Verify') {
+
+            steps {
+
+                sh 'python3 --version'
+
+            }
+
         }
 
     }
+
 }
