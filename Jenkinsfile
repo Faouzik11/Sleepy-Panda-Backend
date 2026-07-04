@@ -8,7 +8,12 @@ pipeline {
 
             steps {
 
-                sh 'pip3 install -r requirements-ci.txt'
+                sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements-ci.txt
+                '''
 
             }
 
@@ -18,7 +23,10 @@ pipeline {
 
             steps {
 
-                sh 'python3 --version'
+                sh '''
+                . venv/bin/activate
+                python --version
+                '''
 
             }
 
