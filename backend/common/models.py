@@ -81,7 +81,7 @@ class Daily(Base):
     email = Column(
         String(255),
         ForeignKey("users.email", ondelete="CASCADE"),
-        nullable=False,
+        nullable=False
     )
 
     date = Column(Date, nullable=False)
