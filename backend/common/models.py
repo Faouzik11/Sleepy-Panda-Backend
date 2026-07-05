@@ -1,6 +1,16 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Date, DateTime, Enum, Float, ForeignKey, Integer, String, TIMESTAMP
+from sqlalchemy import (
+    Column,
+    Date,
+    DateTime,
+    Enum,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    TIMESTAMP,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -27,8 +37,17 @@ class User(Base):
     heart_rate = Column(Integer, nullable=True)
     reset_token = Column(String(255), nullable=True)
 
-    sleep_records = relationship("SleepRecord", back_populates="user", cascade="all, delete-orphan")
-    weekly_records = relationship("WeeklyPrediction", back_populates="user", cascade="all, delete-orphan")
+    sleep_records = relationship(
+        "SleepRecord",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+
+    weekly_records = relationship(
+        "WeeklyPrediction",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
 
 
 class SleepRecord(Base):
@@ -54,19 +73,15 @@ class Work(Base):
     stress_level = Column(Float, nullable=True)
 
 
-from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
-
-
 class Daily(Base):
     __tablename__ = "daily"
 
     id = Column(Integer, primary_key=True, index=True)
 
-   email = Column(
-    String(255),
-    ForeignKey("users.email", ondelete="CASCADE"),
-    nullable=False
-)
+    email = Column(
+        String(255),
+        ForeignKey("users.email", ondelete="CASCADE"),
+        nullable=False,
     )
 
     date = Column(Date, nullable=False)
@@ -82,8 +97,15 @@ class WeeklyPrediction(Base):
     __tablename__ = "weekly_predictions"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(255), ForeignKey("users.email", ondelete="CASCADE"), nullable=False)
-    prediction_result = Column(Enum("Insomnia", "Normal", "Sleep Apnea", name="prediction_enum"), nullable=False)
+    email = Column(
+        String(255),
+        ForeignKey("users.email", ondelete="CASCADE"),
+        nullable=False,
+    )
+    prediction_result = Column(
+        Enum("Insomnia", "Normal", "Sleep Apnea", name="prediction_enum"),
+        nullable=False,
+    )
     prediction_date = Column(TIMESTAMP, server_default=func.now())
 
     user = relationship("User", back_populates="weekly_records")
