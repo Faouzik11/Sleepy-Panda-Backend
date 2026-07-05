@@ -62,10 +62,11 @@ class Daily(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    email = Column(
-        String(255),
-        ForeignKey("users.email"),
-        nullable=False
+   email = Column(
+    String(255),
+    ForeignKey("users.email", ondelete="CASCADE"),
+    nullable=False
+)
     )
 
     date = Column(Date, nullable=False)
